@@ -1,0 +1,330 @@
+Static methods in python:
+------------------------
+1.Simple functions with no self argument.
+
+2.Nested inside class.
+
+3.Work on Class Attributes; Not an instance attributes.
+
+4.Can be called through both class and instance.
+
+5.The built in function @staticmethod() (Decorator function) is used to create them.
+
+6.If the value of a variable is not varied from object to object, such type of variables we have to declare with in the class directly but outside of methods. Such type of variables are called Static variables.
+
+Note : For total class only one copy of static variable will be created and shared by all objects of that class.
+
+7.We can access static variables either by class name or by object reference. But recommended to use class name.
+
+
+--Example1
+
+
+class MyClass(object):	
+    @staticmethod	
+    def show(x):
+        print ("Static values=",x)
+
+MyClass.show(200) 
+
+
+
+--Example2:
+
+class Test:
+    @staticmethod
+    def add(x,y):
+        print("The Sum:",x+y);
+    @staticmethod
+    def product(x,y):
+        print("The Product:",x*y);
+    @staticmethod
+    def Average(x,y):
+        print("The average:",(x+y)/2);
+
+
+Test.add(100,200);
+Test.product(100,200);
+Test.Average(100,200);
+
+--example 3
+
+class Test:
+     @staticmethod
+     def add(x,y):
+        x1=100
+        print("The Sum:",x1+x+y);
+     @staticmethod
+     def product(x,y):
+         x1=100
+         print("The Product:",x1+x*y);
+     @staticmethod
+     def Average(x,y):
+         x1=100
+         print("The average:",(x1+x+y)/2);
+
+obj1 = Test();
+obj2 = Test();
+
+print("object1 values");
+obj1.add(100,20);
+obj1.product(100,200);
+obj1.Average(100,200);
+print(" object2 values");
+obj2.add(10,20);
+obj2.product(10,56)
+obj2.Average(10,25)
+
+
+
+class methods:
+---------------
+
+* A class method is a method that is bound to a class rather than its object. 
+
+* It doesn't require creation of a class instance, much like staticmethod. 
+
+* The difference between a static method and a class method is: Static method knows nothing about the class and just deals with the parameters.
+
+Normal method -> self parameter
+class method -> cls parameter
+static method -> no parameter
+
+class MyClass:
+    def method(self):
+        return 'instance method called', self
+
+    @classmethod
+    def classmethod(cls):
+        return 'class method called', cls
+
+    @staticmethod
+    def staticmethod():
+        return 'static method called'
+
+obj=MyClass();
+print(obj.method());
+print(MyClass.classmethod())
+print(MyClass.staticmethod())
+
+self & cls:
+-----------
+
+self - To access an attribute of an object, you need to prefix the attribute name with the object name (objname.attributename). 
+
+The same way self is used to access an attribute inside the object (class) itself. 
+
+So if you didn't prefix a variable with self in a class method, you wouldn't be able to access that variable in other methods of the class, or outside of the class. 
+
+cls - Each instance creates it's own "copy" of the attributes, so if you wanted all the instances of a class to share the same variable, you would prefix that variable name with 'cls' in the class declaration.
+
+Inner classes or Nested classes:
+-------------------------------
+* A class inside another one class is called Inner classes or nested classes.
+
+class Outer:
+    def __init__(self):
+        print("Outer class object creation");
+    class Inner:
+        def __init__(self):
+            print("Inner class object creation");
+        def m1(self):
+            print("Inner class method");
+
+out=Outer()
+i=out.Inner()
+i.m1();
+
+--example 2
+
+class Outer:
+    def __init__(self):
+        print("Outer class object creation");
+    class Inner:
+        def __init__(self):
+            print("Inner class object creation");
+        def m1(self):
+            print("Inner class method");
+        class Child:
+            def __init__(self):
+                print("Child class object creation")
+            def m2(self):
+                print("Child class method");
+
+out=Outer()
+i=out.Inner()
+c=i.Child();
+i.m1();
+c.m2();
+
+
+Assignment:
+
+class University:
+	class Department:
+		class Staff:
+			class Student:
+
+
+Garbage Collection:
+------------------
+* The Garbage collector is used to destory useless objects.
+
+* if any object does not have any reference variable then that object eligible for Garbage collection.
+
+Module : import gc
+
+# How to Enable or disable Garbage collector?
+
+1.gc.isenabled() -> Returns True if gc Enabled.
+
+2.gc.disable() -> To disable GC Explicitly.
+
+3.gc.enable() -> To enable GC explicitly.
+
+--example
+
+import gc
+print(gc.isenabled())
+gc.disable()
+print(gc.isenabled())
+gc.enable()
+print(gc.isenabled())
+
+How is memory managed in Python?
+
+* Python memory is managed by Python private heap space.
+
+*  All Python objects and data structures are located in a private heap. The programmer does not have an access to this private heap and interpreter takes care of this Python private heap.
+
+* The allocation of Python heap space for Python objects is done by Python memory manager. The core API gives access to some tools for the programmer to code.
+
+* Python also have an inbuilt garbage collector, which recycle all the unused memory and frees the memory and makes it available to the heap space.
+
+
+
+
+
+Polymorphism
+------------
+poly => many or multi
+morphism => forms/shape
+
+
+
+* Polymorphism, in terms of programming, means reusing a single code multiple times. 
+
+*  it is the ability of a program to process objects differently depending on their data type or class.
+
+Polymorphism is of two types -
+
+    Compile-time Polymorphism - This type of polymorphism can be achieved using method overloading.
+ 
+# python does not support method overloading
+
+class Sample:
+	def add(a,b):
+	return (a+b)
+
+	def add(a,b,c):
+	return(a+b+c);
+	
+	def add(a,b,c,d)
+	return(a+b+c+d);
+
+
+
+    Run-time Polymorphism - This type of polymorphism can be achieved using method overriding and virtual functions.
+
+Advantages of Polymorphism
+
+Polymorphism offers the following advantages -
+
+    It helps the programmer to reuse the codes, i.e., classes once written, tested and implemented can be reused as required. Saves a lot of time.
+
+    Single variable can be used to store multiple data types.
+
+    Easy to debug the codes.
+
+
+
+# how to implement dynamic polymorphism in python
+
+--example1
+
+First.py
+
+class Bear():
+    def sound(self):
+        print("Groarrr")
+ 
+class Dog():
+    def sound(self):
+        print ("Woof woof!")
+
+
+second.py
+
+from First import *
+ 
+def makeSound(animalType):
+    animalType.sound()
+ 
+ 
+bearObj = Bear()
+dogObj = Dog()
+ 
+makeSound(bearObj)
+makeSound(dogObj)
+
+--Example2
+
+class Document:
+    def __init__(self,name):
+        self.name=name
+         
+    def show(self):             
+        print("Subclass must implement abstract method")
+ 
+class Pdf(Document):
+    def show(self):
+        return 'Show pdf contents!'
+ 
+class Word(Document):
+    def show(self):
+        return 'Show word contents!'
+ 
+obj1=Pdf("raj");
+obj2=Word("raj");
+print(obj1.show())
+print(obj2.show());
+
+
+
+
+--example3
+First.py
+
+class A(object): 
+   def show(self): 
+      print ("A class method is called")
+  
+class B(A): 
+   def show(self): 
+      print ("B class method is called") 
+
+  
+def checkmethod(classmethod): 
+   classmethod.show()  
+
+AObj = A() 
+BObj = B() 
+  
+checkmethod(AObj) 
+checkmethod(BObj) 
+
+
+
+
+
+

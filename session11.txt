@@ -1,0 +1,187 @@
+Python Decorators:
+-------------------
+* Decorator is a function which can take a function as argument and extend its functionality and returns modified function with extended functionality.
+
+* The main objective of decorator functions is : We can extend the functionality of existing functions without modifies that function.
+
+* The usage of decorates is very easy, but writing decorators can be complicated.
+
+* we have two different kinds of decorators in Python:
+
+    Function decorators
+    Class decorators 
+
+def wish(name):
+	print("Hello",name,"Good Morning")
+
+
+calling:
+
+wish("Raja")
+wish("Shekar")
+wish("kumar")
+wish("Chenna")
+
+
+
+This function can always print same output for any name
+
+Hello Shekar Good Morning
+
+Hello Raja Good Morning
+
+Hello Ford Good Morning
+
+But we want to modify this function to provide different message if name is Raja.
+
+We can do this without touching wish() function by using "Decorator".
+
+I method (with using @decor)
+
+def decor(func):
+    def inner(name):
+        if name=="Raja":
+            print("Hello Raja Good Evening");
+        else:
+            func(name)
+    return inner
+
+@decor
+def wish(name):
+    print("Hello",name," Good Morning")
+
+
+wish("Shekar")
+wish("Raja")
+wish("Kumar")
+
+# II method (without using @decor)
+
+def decor(func):
+    def inner(name):
+        if name=="Raja":
+            print("Hello Raja Very Good Evening");
+        else:
+            func(name)
+    return inner
+
+
+def wish(name):
+    print("Hello",name," Good Morning")
+
+obj =decor(wish)
+
+obj("Shekar")
+obj("Raja")
+obj("Kumar")
+
+
+--Example2
+
+
+def smart_division(func):
+    def inner(a,b):
+        print("We are dividing",a," with ",b);
+        if b==0:
+            print("OOPS ... Cannot be divide")
+            return
+        else:
+            return func(a,b)
+    return inner
+
+@smart_division
+def division(a,b):
+    return(a/b)
+
+print("Result1:",division(20,2))
+print("Result2:",division(20,0))
+
+Multiple Decorators Functions
+------------------------------
+
+def star(func):
+    def inner(msg):
+        print("*" * 30)
+        func(msg)
+        print("*" * 30)
+    return inner
+
+def percent(func):
+    def inner(msg):
+        print("%" * 30)
+        func(msg)
+        print("%" * 30)
+    return inner
+
+@star
+@percent
+def printer(msg):
+    print(msg)
+
+printer("Nithish")
+or 
+
+is equivalent to
+
+def printer(msg):
+    print(msg)
+
+printer = star(percent(printer))
+printer("hello")
+
+
+
+class ClassBasedDecorator(object):
+
+    def __init__(self, func_to_decorate):
+        print ("INIT ClassBasedDecorator")
+        self.func_to_decorate = func_to_decorate
+
+    def __call__(self, *args, **kwargs):
+        print ("CALL ClassBasedDecorator")
+        return self.func_to_decorate(*args, **kwargs)
+
+
+@ClassBasedDecorator
+def print_moar_args(*args):
+    for arg in args:
+        print (arg)
+
+
+print_moar_args(1, 2, 3)
+print_moar_args(1, 2, 3)
+
+
+--example2
+
+
+class Test:
+    def __init__(self,x):
+        print ("INIT ClassBasedDecorator")
+        self.x=x
+    def __call__(self):
+        print("Call Class based decorator:")
+        return self.x()
+        
+@Test
+def show():
+    print("welcome to all")
+
+
+show()
+        
+
+# How to invoke decoraters from another module?
+
+Second.py
+
+from First import *    
+   
+@Test
+def show():
+    print("welcome to all")
+
+
+show()
+        
+
